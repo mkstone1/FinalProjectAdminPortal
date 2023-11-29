@@ -1,6 +1,6 @@
 // CreateQuestionsPage.jsx
 import React, { useState } from "react";
-import "./CreateQuestionPage.css"
+import "./CreateQuestionPage.css";
 
 const CreateQuestionsPage = () => {
   const [formData, setFormData] = useState({
@@ -41,54 +41,52 @@ const CreateQuestionsPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
     const postData = {
-        categoryId: formData.categoryId,
-        title: formData.title,
-        wrongAnswer: formData.wrongAnswer,
-        answers: formData.answers.map((answer, i) => ({
-          id: i + 1,
-          answer: answer,
-        })),
-      };
+      categoryId: formData.categoryId,
+      title: formData.title,
+      wrongAnswer: formData.wrongAnswer,
+      answers: formData.answers.map((answer, i) => ({
+        id: i + 1,
+        answer: answer,
+      })),
+    };
 
-    console.log(formData)
+    console.log(formData);
 
     // Assuming you have an API endpoint to send the data
-    const apiUrl = "http://localhost:7062/api/cards";
-    console.log(formData)
-     try {
-
+    const apiUrl =
+      "https://finalprojectbackend.azurewebsites.net/api/cards?code=qaWssbOBmAK8d9RvAnfj-8_JggACRsp_J7VcJLsz6Xz4AzFuVStsTQ==";
+    console.log(formData);
+    try {
       const response = await fetch(apiUrl, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(postData),
       });
 
       if (response.ok) {
-        console.log('Data submitted successfully');
+        console.log("Data submitted successfully");
         // Handle success, e.g., show a success message or redirect
       } else {
-        console.error('Failed to submit data');
+        console.error("Failed to submit data");
         // Handle error, e.g., show an error message
       }
     } catch (error) {
-      console.error('Error during API request', error);
+      console.error("Error during API request", error);
       // Handle error, e.g., show an error message
     }
   };
 
   return (
     <div id="question-form">
-
       <form onSubmit={handleSubmit} className="question-form-element">
-      <h1>Create Questions</h1>
+        <h1>Create Questions</h1>
         <select
           id="categoryId"
           value={formData.categoryId}
-          style = {{ marginBottom : 25, marginLeft :25 }}
+          style={{ marginBottom: 25, marginLeft: 25 }}
           onChange={handleDropdownChange}
         >
           <option>Nynne</option>
@@ -124,7 +122,7 @@ const CreateQuestionsPage = () => {
           <div key={index} className="question-form-element">
             <label htmlFor={`answer${index + 1}`}>{`Svar ${index + 1}`}</label>
             <input
-            className="question-form-input"
+              className="question-form-input"
               type="text"
               id={`answer${index + 1}`}
               name={`answer${index + 1}`}
