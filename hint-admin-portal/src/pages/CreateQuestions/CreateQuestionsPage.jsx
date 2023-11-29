@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import "./CreateQuestionPage.css";
 
 const CreateQuestionsPage = () => {
+  const [error, setError] = useState(null);
+
   const [formData, setFormData] = useState({
     categoryId: "Nynne",
     title: "",
@@ -68,14 +70,19 @@ const CreateQuestionsPage = () => {
 
       if (response.ok) {
         console.log("Data submitted successfully");
-        // Handle success, e.g., show a success message or redirect
+        setFormData({
+          categoryId: "Nynne",
+          title: "",
+          wrongAnswer: "",
+          answers: ["", "", "", "", ""],
+        });
       } else {
         console.error("Failed to submit data");
-        // Handle error, e.g., show an error message
+        setError("En fejl er sket. Snak med Mark");
       }
     } catch (error) {
       console.error("Error during API request", error);
-      // Handle error, e.g., show an error message
+      setError("En fejl er sket. Snak med Mark");
     }
   };
 
@@ -134,6 +141,7 @@ const CreateQuestionsPage = () => {
 
         <button type="submit">Submit</button>
       </form>
+      {error && <div className="error-box">{error}</div>}
     </div>
   );
 };

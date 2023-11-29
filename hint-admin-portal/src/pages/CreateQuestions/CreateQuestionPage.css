@@ -18,3 +18,7 @@
     height:20px;
     width: 33%;
 }
+
+.error-box{
+    background-color: red;
+}
