@@ -59,6 +59,7 @@ const CreateQuestionsPage = () => {
         answer: answer,
       })),
     };
+    console.log(postData)
 
     const apiUrl =
       "https://finalprojectbackend.azurewebsites.net/api/cards?code=qaWssbOBmAK8d9RvAnfj-8_JggACRsp_J7VcJLsz6Xz4AzFuVStsTQ==";
