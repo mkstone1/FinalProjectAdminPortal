@@ -4,6 +4,8 @@ import "./CreateQuestionPage.css";
 
 const CreateQuestionsPage = () => {
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [fromHint, setFromHint] = useState(true);
 
   const [formData, setFormData] = useState({
     categoryId: "Nynne",
@@ -40,11 +42,16 @@ const CreateQuestionsPage = () => {
     }));
   };
 
+  const handleCheckboxChange = () => {
+    setFromHint((prevValue) => !prevValue);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const postData = {
       categoryId: formData.categoryId,
+      fromHint: fromHint,
       title: formData.title,
       wrongAnswer: formData.wrongAnswer,
       answers: formData.answers.map((answer, i) => ({
@@ -53,12 +60,8 @@ const CreateQuestionsPage = () => {
       })),
     };
 
-    console.log(formData);
-
-    // Assuming you have an API endpoint to send the data
     const apiUrl =
       "https://finalprojectbackend.azurewebsites.net/api/cards?code=qaWssbOBmAK8d9RvAnfj-8_JggACRsp_J7VcJLsz6Xz4AzFuVStsTQ==";
-    console.log(formData);
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -76,6 +79,7 @@ const CreateQuestionsPage = () => {
           wrongAnswer: "",
           answers: ["", "", "", "", ""],
         });
+        setSuccess(true);
       } else {
         console.error("Failed to submit data");
         setError("En fejl er sket. Snak med Mark");
@@ -139,8 +143,20 @@ const CreateQuestionsPage = () => {
           </div>
         ))}
 
+        <div className="question-form-element">
+          <label htmlFor="checkbox">From hint</label>
+          <input
+            type="checkbox"
+            id="checkbox"
+            name="checkbox"
+            checked={fromHint}
+            onChange={handleCheckboxChange}
+          />
+        </div>
+
         <button type="submit">Submit</button>
       </form>
+      {success && <div className="success-box"> success</div>}
       {error && <div className="error-box">{error}</div>}
     </div>
   );
